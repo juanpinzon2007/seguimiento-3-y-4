@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blackjack 21</title>
+    <script>
+        let puntos, turno, plantados;
+
+        function inicializarJuego() {
+            puntos = [0, 0];
+            turno = 0;
+            plantados = [false, false];
+            document.getElementById("puntos0").innerText = "Jugador 1 - Puntos: 0";
+            document.getElementById("puntos1").innerText = "Jugador 2 - Puntos: 0";
+            document.getElementById("resultado").innerText = "";
+        }
+
+        function obtenerCarta() {
+            return Math.floor(Math.random() * 10) + 2;
+        }
+
+        function jugar() {
+            while (!plantados[turno]) {
+                let carta = obtenerCarta();
+                puntos[turno] += carta;
+                document.getElementById("puntos" + turno).innerText = "Jugador " + (turno + 1) + " - Puntos: " + puntos[turno];
+                if (puntos[turno] > 21) {
+                    plantados[turno] = true;
+                }
+                break;
+            }
+            cambiarTurno();
+        }
+
+        function plantarse() {
+            plantados[turno] = true;
+            cambiarTurno();
+            if (plantados[0] && plantados[1]) {
+                determinarGanador();
+            }
+        }
+
+        function cambiarTurno() {
+            turno = (turno + 1) % 2;
+        }
+
+        function determinarGanador() {
+            let mensaje = "";
+            if (puntos[0] > 21 && puntos[1] > 21) {
+                mensaje = "Ambos pierden";
+            } else if (puntos[0] > 21) {
+                mensaje = "Jugador 2 gana";
+            } else if (puntos[1] > 21) {
+                mensaje = "Jugador 1 gana";
+            } else if (puntos[0] > puntos[1]) {
+                mensaje = "Jugador 1 gana";
+            } else if (puntos[1] > puntos[0]) {
+                mensaje = "Jugador 2 gana";
+            } else {
+                mensaje = "Empate";
+            }
+            document.getElementById("resultado").innerText = mensaje;
+        }
+    </script>
+</head>
+<body onload="inicializarJuego()">
+    <h1>Blackjack 21</h1>
+    <div>
+        <p id="puntos0">Jugador 1 - Puntos: 0</p>
+        <button onclick="jugar()">Pedir Carta</button>
+        <button onclick="plantarse()">Plantarse</button>
+    </div>
+    <div>
+        <p id="puntos1">Jugador 2 - Puntos: 0</p>
+    </div>
+    <h2 id="resultado"></h2>
+    <button onclick="inicializarJuego()">Reiniciar Juego</button>
+</body>
+</html>

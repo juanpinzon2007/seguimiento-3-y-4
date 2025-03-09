@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blackjack</title>
+</head>
+<body>
+    <h1>Blackjack</h1>
+    <div>
+        <p id="puntos0">Jugador 1: 0</p>
+        <p id="mensaje0"></p>
+        <button id="carta0">Carta</button>
+        <button id="plantarse0">Plantarse</button>
+    </div>
+    <div>
+        <p id="puntos1">Jugador 2: 0</p>
+        <p id="mensaje1"></p>
+        <button id="carta1">Carta</button>
+        <button id="plantarse1">Plantarse</button>
+    </div>
+    <button id="reiniciar">Reiniciar</button>
+
+    <script>
+        let puntos = [0, 0];
+        let jugando = [true, true];
+        
+        function obtenerCarta() {
+            return Math.floor(Math.random() * 10) + 2;
+        }
+
+        function actualizarInterfaz() {
+            for (let i = 0; i < 2; i++) {
+                document.getElementById(`puntos${i}`).innerText = `Jugador ${i + 1}: ${puntos[i]}`;
+                document.getElementById(`mensaje${i}`).innerText = puntos[i] > 21 ? "¡Te pasaste!" : (jugando[i] ? "" : "Plantado");
+            }
+        }
+        
+        function jugar(jugador) {
+            if (jugando[jugador]) {
+                let carta = obtenerCarta();
+                puntos[jugador] += carta;
+                actualizarInterfaz();
+                if (puntos[jugador] > 21) {
+                    jugando[jugador] = false;
+                }
+            }
+        }
+
+        function plantarse(jugador) {
+            jugando[jugador] = false;
+            actualizarInterfaz();
+        }
+
+        document.getElementById('carta0').addEventListener('click', function() {
+            jugar(0);
+        });
+
+        document.getElementById('carta1').addEventListener('click', function() {
+            jugar(1);
+        });
+        
+        document.getElementById('plantarse0').addEventListener('click', function() {
+            plantarse(0);
+        });
+
+        document.getElementById('plantarse1').addEventListener('click', function() {
+            plantarse(1);
+        });
+
+        document.getElementById('reiniciar').addEventListener('click', function() {
+            puntos = [0, 0];
+            jugando = [true, true];
+            actualizarInterfaz();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blackjack</title>
+</head>
+<body>
+    <h1>Blackjack</h1>
+    <div>
+        <p id="puntos0">Jugador 1: 0</p>
+        <p id="mensaje0"></p>
+        <button id="carta0">Carta</button>
+    </div>
+    <div>
+        <p id="puntos1">Jugador 2: 0</p>
+        <p id="mensaje1"></p>
+        <button id="carta1">Carta</button>
+    </div>
+    <button id="reiniciar">Reiniciar</button>
+
+    <script>
+        let puntos = [0, 0];
+
+        
+        document.getElementById('carta0').addEventListener('click', function() {
+            puntos[0] += Math.floor(Math.random() * 10) + 2;
+            document.getElementById('puntos0').innerText = 'Jugador 1: ' + puntos[0];
+            document.getElementById('mensaje0').innerText = puntos[0] > 21 ? '¡Te pasaste!' : '';
+        });
+
+        
+        document.getElementById('carta1').addEventListener('click', function() {
+            puntos[1] += Math.floor(Math.random() * 10) + 2;
+            document.getElementById('puntos1').innerText = 'Jugador 2: ' + puntos[1];
+            document.getElementById('mensaje1').innerText = puntos[1] > 21 ? '¡Te pasaste!' : '';
+        });
+
+      
+        document.getElementById('reiniciar').addEventListener('click', function() {
+            puntos = [0, 0];
+            document.getElementById('puntos0').innerText = 'Jugador 1: 0';
+            document.getElementById('mensaje0').innerText = '';
+            document.getElementById('puntos1').innerText = 'Jugador 2: 0';
+            document.getElementById('mensaje1').innerText = '';
+        });
+    </script>
+</body>
+</html>
